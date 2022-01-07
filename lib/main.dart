@@ -1,5 +1,5 @@
 import 'package:everyday_mart/Pages/CustomerHomePage/CustomerHomePage.dart';
-import 'package:everyday_mart/Pages/StoreOwnerHomePage/StoreHomePage.dart';
+import 'package:everyday_mart/Pages/WelcomePage/WelcomePage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Everyday Mart",
-      home: CustomerHomePage(),
+      home: WelcomePage(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:everyday_mart/Data/Data.dart';
 import 'package:everyday_mart/utils/Colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StoreHomePage extends StatefulWidget {
   const StoreHomePage({Key? key}) : super(key: key);
@@ -16,87 +17,46 @@ class _StoreHomePageState extends State<StoreHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Palette.blueColor,
+        title: Text(
+          "Start Creating Your Store",
+          style: GoogleFonts.ubuntu(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: Column(
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 25),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Start creating your ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Palette.blueColor,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: "STORE",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Palette.blueColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  textField(context, "Search Store"),
-                  textField(context, "Visual Search"),
-                ],
-              ),
+              const SizedBox(height: 10),
+              textField(context, "Search Store"),
+              const SizedBox(height: 10),
+              textField(context, "Visual Search"),
             ],
           ),
           Flexible(
-            child: GridView.count(
-              crossAxisCount: 2,
-              children: List.generate(
-                12,
-                (index) {
-                  return Center(
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width / 2 - 15,
-                          height: 185,
-                          decoration: BoxDecoration(
-                            color: Palette.blueColor.withOpacity(1),
-                            border: Border.all(color: Palette.yellowColor),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Image.network(
-                              categories[index]['url'],
-                              width: MediaQuery.of(context).size.width / 2.2,
-                              height: 80,
-                            ),
-                            Text(
-                              categories[index]['title'],
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFFDD835),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+            child: Row(
+              children: [
+                Flexible(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    children: List.generate(
+                      categories.length,
+                      (index) {
+                        return card(context, categories[index]['title'],
+                            categories[index]['url']);
+                      },
                     ),
-                  );
-                },
-              ),
+                  ),
+                ),
+                SizedBox(width: 12, height: MediaQuery.of(context).size.height),
+              ],
             ),
           ),
         ],
@@ -137,44 +97,112 @@ class _StoreHomePageState extends State<StoreHomePage> {
     );
   }
 
-  //TextField
-  Container textField(BuildContext context, String text) {
+  Widget card(BuildContext context, String title, String url) {
     return Container(
-        margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-        width: MediaQuery.of(context).size.width / 2.2,
+      margin: const EdgeInsets.only(top: 12, left: 12),
+      height: 180,
+      width: MediaQuery.of(context).size.width / 4,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: PhysicalModel(
+        color: Colors.white,
+        elevation: 5,
+        child: Stack(
+          children: [
+            SizedBox(
+              height: 180,
+              width: MediaQuery.of(context).size.width / 2,
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Image.network(
+                      url,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                  Text(
+                    title,
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w500,
+                      color: Palette.blueColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container textField(BuildContext context, String hintText) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      width: MediaQuery.of(context).size.width,
+      height: 55,
+      decoration: BoxDecoration(
+        color: Colors.white10,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: PhysicalModel(
+        color: Colors.white,
+        elevation: 3.5,
         child: TextField(
           decoration: InputDecoration(
+            isDense: true,
+            contentPadding: const EdgeInsets.all(20),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
-            fillColor: Colors.grey[300],
+            fillColor: Colors.white,
             filled: true,
-            prefixIcon: Icon(
-              (text == "Search Store") ? Icons.search : Icons.camera_alt,
-              color: Colors.black,
+            prefixIcon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(width: 5),
+                Icon(
+                  (hintText == "Search Store")
+                      ? Icons.search
+                      : Icons.camera_alt_outlined,
+                  size: 28,
+                  color: Colors.black,
+                ),
+                const SizedBox(width: 3),
+              ],
             ),
             suffixIcon: Icon(
-              (text == "Search Store") ? Icons.mic : null,
+              (hintText == "Search Store") ? Icons.mic : null,
+              size: 25,
               color: Colors.black,
             ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade300),
-              borderRadius: const BorderRadius.all(
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.all(
                 Radius.circular(20),
               ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade300),
-              borderRadius: const BorderRadius.all(
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.all(
                 Radius.circular(20),
               ),
             ),
-            contentPadding: const EdgeInsets.all(10),
-            hintText: text,
+            hintText: hintText,
             hintStyle: const TextStyle(
-              fontSize: 14,
+              fontSize: 18,
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

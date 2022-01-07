@@ -1,3 +1,4 @@
+import 'package:everyday_mart/Pages/CustomerHomePage/CustomerHomePage.dart';
 import 'package:everyday_mart/Pages/StoreOwnerHomePage/StoreHomePage.dart';
 import 'package:everyday_mart/utils/Colors.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -5,7 +6,8 @@ import 'package:otp_text_field/style.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  SignupPage(this.isStore);
+  bool isStore;
 
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -73,7 +75,10 @@ class _SignupPageState extends State<SignupPage> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const StoreHomePage()),
+                MaterialPageRoute(
+                    builder: (context) => (widget.isStore)
+                        ? const StoreHomePage()
+                        : const CustomerHomePage()),
               );
             },
             child: Stack(

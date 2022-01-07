@@ -196,7 +196,7 @@ class _WelcomePageState extends State<WelcomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignupPage()),
+                  MaterialPageRoute(builder: (context) => SignupPage(isStore)),
                 );
               },
               child: SizedBox(
