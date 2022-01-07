@@ -119,10 +119,10 @@ class _StoreHomePageState extends State<StoreHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image.network(
-                      url,
+                    child: Image.asset(
+                      "assets/images/apple.png",
+                      width: 100,
+                      height: 100,
                       alignment: Alignment.center,
                     ),
                   ),

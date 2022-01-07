@@ -98,8 +98,8 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 150,
-                  child: Image.network(
-                    url,
+                  child: Image.asset(
+                    "assets/images/welcome_screen_image.jpg",
                     fit: BoxFit.cover,
                     height: double.infinity,
                     width: double.infinity,
